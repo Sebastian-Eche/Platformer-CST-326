@@ -9,10 +9,17 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI timerText;
     public Camera scrollingCam;
     public float cameraSpeed = 5f;
+    public TextMeshProUGUI coin;
+    public TextMeshProUGUI player;
+    public GameObject coinObject;
+    public GameObject failedLevel;
+    public float coinLift = 0.001f; 
+    private int coins;
+    private int points;
 
     void Update()
     {
-        int intTime = 400 - (int)Time.realtimeSinceStartup;
+        int intTime = 100 - (int)Time.realtimeSinceStartup;
         string timeStr = $"Time \n {intTime}";
         timerText.text = timeStr;
 
@@ -26,7 +33,10 @@ public class GameManager : MonoBehaviour
                 scrollingCam.transform.Translate(-cameraSpeed * Time.deltaTime, 0f, 0f);
             }
         }
-        
-    }
 
+        if(intTime == 0){
+            intTime = 0;
+            failedLevel.SetActive(true);
+        }
+    }
 }

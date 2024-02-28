@@ -13,10 +13,10 @@ public class BrickBreaker : MonoBehaviour
     public TextMeshProUGUI coin;
     public TextMeshProUGUI player;
     public GameObject coinObject;
-    public float coinLift = 0.001f; 
+    public float coinLift = 0.7f; 
     private Vector3 newMousePosition;
-    private int coins;
-    private int points;
+    public int coins;
+    public int points;
 
     void Start()
     {
@@ -60,7 +60,7 @@ public class BrickBreaker : MonoBehaviour
         
     }
 
-    IEnumerator coinSpawn(RaycastHit hitInfo)
+    public IEnumerator coinSpawn(RaycastHit hitInfo)
     {   
         float timeElapsed = 0;
         GameObject questionHit = hitInfo.collider.gameObject;
@@ -71,13 +71,20 @@ public class BrickBreaker : MonoBehaviour
         while(timeElapsed < coinLift)
         {
             // float newY = timeElapsed + newCoin.transform.position.y;
-            rb.AddForce(Vector3.up, ForceMode.Force);
+            rb.AddForce(Vector3.up * 3, ForceMode.Force);
             // newCoin.transform.SetPositionAndRotation(new Vector3(sameX, newY, 0f), new Quaternion(0f, newY,0f,0f));
             timeElapsed += Time.deltaTime;
             // Debug.Log(timeElapsed);
             yield return null;
         }
+        // coins++;
+        // points += 200;
         // Debug.Break();
         Destroy(newCoin);
+    }
+
+    public void changeUI(){
+        coin.text = $"x{coins.ToString("00")}";
+         player.text = $"MARIO\n {points.ToString("000000")}";
     }
 }
